@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class PlayerCollision : MonoBehaviour
 {
@@ -12,6 +14,7 @@ public class PlayerCollision : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy"))
         {
             Debug.Log("GAME OVER");
+            SceneManager.LoadScene("Level1");
         }
 
         if (other.gameObject.CompareTag("Ground"))
@@ -31,7 +34,14 @@ public class PlayerCollision : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(name + " Tigger con" + other.gameObject.name);
-        Destroy(other.gameObject);
+        if (other.gameObject.CompareTag("Powerup")){
+            Debug.Log(name + " Tigger con" + other.gameObject.name);
+            Destroy(other.gameObject);
+            GameManager.instance.score += 100;
+            GameManager.instance.powerupSpeed++;
+
+
+        }
+        
     }
 }
